@@ -1,35 +1,68 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+
+
+import React from 'react';
+import { 
+  BrowserRouter as Router,  // decided to use alias for cleaner code
+  Routes, 
+  Route 
+} from 'react-router-dom';
+
+// Component imports
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import Projects from './components/Projects';
+import ProjectDetails from './components/ProjectDetails';
+import Profile from './components/Profile';
+// import Settings from './components/Settings';  // will add this later if needs be
 
 function App() {
-  const [count, setCount] = useState(0)
+  // might need to add auth check here later
+  // const isAuthenticated = false;  // ToDo: implement auth
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <Router>
+      {/* Main app wrapper */}
+      <div className="app-container">  {/* added className for styling */}
+        <Navbar />  {/* show nav at top */}
+        
+        {/* Main content area */}
+        <div className="main-content">
+          <Routes>
+            {/* Homepage route */}
+            <Route 
+              path="/" 
+              element={<Home />}  // using element instead of component
+            />
+            
+            {/* Project routes */}
+            <Route 
+              path="/projects" 
+              element={<Projects />}  // using element instead of component
+            />
+            <Route 
+              path="/projects/:id"  // dynamic route for individual projects
+              element={<ProjectDetails />}  // using element instead of component
+            />
+            
+            {/* User routes */}
+            <Route 
+              path="/profile" 
+              element={<Profile />}  // using element instead of component
+            />
+
+            {/* i Will Add more routes here later */}
+            {/* <Route path="/settings" element={<Settings />} /> */}
+            
+            {/* ToDo: Add 404 route */}
+            {/* <Route path="*" element={<NotFound />} /> */}
+          </Routes>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </Router>
+  );
 }
 
-export default App
+// Need to wrap with auth provider later
+export default App;
+
+
