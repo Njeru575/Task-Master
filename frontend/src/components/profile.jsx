@@ -2,13 +2,11 @@ import React, { useEffect, useState } from "react";
 
 const Profile = () => {
   const [userDetails, setUserDetails] = useState(null);
-
-  // Get the logged-in user from localStorage
   const storedUser = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     if (storedUser) {
-      fetch(`http://127.0.0.1:5000/users/${storedUser.id}`)
+      fetch(`http://localhost:5000/users/${storedUser.id}`)
         .then((res) => res.json())
         .then(setUserDetails);
     }
