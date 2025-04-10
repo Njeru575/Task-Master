@@ -80,4 +80,4 @@ const ProjectForm = ({ onSubmit }) => {
 
 export default ProjectForm;
 
-// Note to Valerie: Style error messages better!😹
+// Note to Vall: Style error messages better!😹
