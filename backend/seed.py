@@ -120,7 +120,7 @@ with app.app_context():
     db.session.add_all([assignment1, assignment2, assignment3, assignment4, assignment5, assignment6, assignment7])
     db.session.commit()
 
-    print("Database seeded successfully!")
+    print("Database is seeded successfully!")
 
 
 
