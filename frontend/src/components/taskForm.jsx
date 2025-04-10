@@ -24,7 +24,15 @@ const TaskForm = ({ projectId, onTaskCreated }) => {
         console.error('Error creating task:', error);
       }
     };
-
+     // Yup validation rules
+  const validationSchema = Yup.object({
+    title: Yup.string()
+      .required('Title is required')
+      .min(4, 'Title must be at least 4 characters'),
+    due_date: Yup.date()
+      .required('Due date is required')
+      .min(new Date(), 'Due date cannot be in the past'),
+  });
     return (
     <div>
       <h3>Add New Task</h3>
