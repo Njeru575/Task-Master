@@ -6,6 +6,10 @@ from models import User, Project, Task, TaskAssignment
 
 def register_routes(app):
 
+    @app.route('/')
+    def home():
+        return "Welcome to the Task Management API!"
+
     # ---------- User Routes ----------
     @app.route('/api/users/register', methods=['POST'])
     def register_user():

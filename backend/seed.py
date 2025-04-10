@@ -1,10 +1,13 @@
-from app import create_app
-from app import db
+from app import create_app, db
 from models import User, Project, Task, TaskAssignment
-from werkzeug.security import generate_password_hash
 from datetime import date
 
 app = create_app()
+
+def create_user(username, email, raw_password):
+    user = User(username=username, email=email)
+    user.set_password(raw_password)
+    return user
 
 with app.app_context():
     # Recreate the database
@@ -12,26 +15,10 @@ with app.app_context():
     db.create_all()
 
     # Create users
-    user1 = User(
-        username="alice",
-        email="alice@example.com",
-        password=generate_password_hash("password123")
-    )
-    user2 = User(
-        username="bob",
-        email="bob@example.com",
-        password=generate_password_hash("password456")
-    )
-    user3 = User(
-        username="carol",
-        email="carol@example.com",
-        password=generate_password_hash("pass789")
-    )
-    user4 = User(
-        username="dave",
-        email="dave@example.com",
-        password=generate_password_hash("securepass")
-    )
+    user1 = create_user("alice", "alice@example.com", "password123")
+    user2 = create_user("bob", "bob@example.com", "password456")
+    user3 = create_user("carol", "carol@example.com", "pass789")
+    user4 = create_user("dave", "dave@example.com", "securepass")
 
     db.session.add_all([user1, user2, user3, user4])
     db.session.commit()
@@ -117,11 +104,10 @@ with app.app_context():
     assignment6 = TaskAssignment(user=user4, task=task6, estimated_hours=3)
     assignment7 = TaskAssignment(user=user4, task=task7, estimated_hours=5)
 
-    db.session.add_all([assignment1, assignment2, assignment3, assignment4, assignment5, assignment6, assignment7])
+    db.session.add_all([
+        assignment1, assignment2, assignment3,
+        assignment4, assignment5, assignment6, assignment7
+    ])
     db.session.commit()
 
-    print("Database is seeded successfully!")
-
-
-
-
+    print("✅ Database seeded successfully!")

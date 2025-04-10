@@ -1,7 +1,6 @@
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-
 from app import db
 
 class TaskAssignment(db.Model):
@@ -9,6 +8,9 @@ class TaskAssignment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     task_id = db.Column(db.Integer, db.ForeignKey('tasks.id'), primary_key=True)
     estimated_hours = db.Column(db.Float, nullable=False)
+
+    user = db.relationship('User', backref='assignments', overlaps="tasks,assigned_users")
+    task = db.relationship('Task', backref='task_assignments', overlaps="assigned_users,tasks")
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -18,7 +20,14 @@ class User(db.Model):
     password_hash = db.Column(db.String(128), nullable=False)
 
     projects = db.relationship('Project', backref='creator', lazy=True)
-    tasks = db.relationship('Task', secondary='task_assignments', backref='assigned_users', lazy='dynamic')
+
+    tasks = db.relationship(
+        'Task',
+        secondary='task_assignments',
+        backref=db.backref('assigned_users', lazy='dynamic', overlaps="task_assignments,assignments"),
+        lazy='dynamic',
+        overlaps="assignments,task_assignments"
+    )
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -45,4 +54,4 @@ class Task(db.Model):
     status = db.Column(db.String(50), default='Pending')
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'), nullable=False)
 
-    assignments = db.relationship('TaskAssignment', backref='task', lazy=True)
+    # No need to redefine relationships already defined via TaskAssignment
