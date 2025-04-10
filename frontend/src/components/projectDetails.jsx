@@ -8,11 +8,11 @@ const ProjectDetails = () => {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/projects/${id}`)
+    fetch(`http://localhost:5000/projects/${id}`)
       .then((res) => res.json())
       .then(setProject);
 
-    fetch(`http://localhost:5000/api/tasks?project_id=${id}`)
+    fetch(`http://localhost:5000/tasks?project_id=${id}`)
       .then((res) => res.json())
       .then(setTasks);
   }, [id]);
