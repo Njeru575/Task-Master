@@ -77,3 +77,5 @@ const TaskForm = ({ projectId, onTaskCreated }) => {
     </div>
   );
 };
+
+export default TaskForm;
