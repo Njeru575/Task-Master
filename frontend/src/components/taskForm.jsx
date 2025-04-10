@@ -24,4 +24,48 @@ const TaskForm = ({ projectId, onTaskCreated }) => {
         console.error('Error creating task:', error);
       }
     };
-}
+
+    return (
+    <div>
+      <h3>Add New Task</h3>
+      <Formik
+        initialValues={{
+          title: '',
+          due_date: '',
+          status: 'To Do',
+        }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        <Form>
+          {/* Title Input */}
+          <div>
+            <label>Title</label>
+            <Field name="title" placeholder="Enter task title" />
+            <ErrorMessage name="title" component="div" className="error" />
+          </div>
+
+          {/* Due Date Input */}
+          <div>
+            <label>Due Date</label>
+            <Field name="due_date" type="date" />
+            <ErrorMessage name="due_date" component="div" className="error" />
+          </div>
+
+          {/* Status Dropdown */}
+          <div>
+            <label>Status</label>
+            <Field as="select" name="status">
+              <option value="To Do">To Do</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Done">Done</option>
+            </Field>
+          </div>
+
+          {/* Submit Button */}
+          <button type="submit">Create Task</button>
+        </Form>
+      </Formik>
+    </div>
+  );
+};
