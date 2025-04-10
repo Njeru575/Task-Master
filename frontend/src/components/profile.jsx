@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 
 const Profile = () => {
   const [userDetails, setUserDetails] = useState(null);
+
+  // Get the logged-in user from localStorage
   const storedUser = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
