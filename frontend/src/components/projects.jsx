@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'
+import ProjectForm from './projectForm';
 
 const Projects = () => {
     const [projects, setProjects] = useState([]);
@@ -11,26 +11,34 @@ const Projects = () => {
         .then((data) => setProjects(data))
         .catch((err) => console.error("Error fetching projects:", err));
     }, []);
+    const fetchProjects = async () => {
+      const response = await fetch('/api/projects');
+      const data = await response.json();
+      setProjects(data);
+  };
 
+    const handleCreateProject = async (project) => {
+      const response = await fetch('/api/projects', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(project),
+      });
+      if (response.ok) {
+          fetchProjects(); // Refresh the project list
+      }
+  };
+     
     return (
         <div>
-          <h2>All Projects</h2>
-    
-          {/* display no projects found if projects haven't loaded */}
-          {projects.length === 0 ? (
-            <p>No projects found!</p>
-          ) : (
+          <h1>Projects</h1>
+          <ProjectForm onSubmit={handleCreateProject} />
             <ul>
-              {projects.map((project) => (
-                <li key={project.id}>
-                  {/* link to project details page */}
-                  <Link to={`/projects/${project.id}`}>
-                    <strong>{project.title}</strong>: {project.description}
-                  </Link>
-                </li>
-              ))}
+                {projects.map((project) => (
+                    <li key={project.id}>{project.title}</li>
+                ))}
             </ul>
-          )}
         </div>
       );
     };
