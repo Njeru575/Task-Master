@@ -44,6 +44,7 @@ nav a:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-align: center;
 }
 
 /* Dark overlay */
@@ -54,7 +55,7 @@ nav a:hover {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.3); 
+  background-color: rgba(0, 0, 0, 0.1); 
 }
 
 .home-container > * {
@@ -70,9 +71,10 @@ nav a:hover {
 }
 
 .home-container p {
-  font-size: 2.5rem;
+  font-size: 5rem;
   margin-bottom: 20px;
-  color: #fff; 
+  color:rgb(79, 79, 182); 
+  font-weight: bold;
 }
 
 .home-container button {
@@ -156,6 +158,16 @@ button:hover {
   font-size: 0.9rem;
   margin-top: 5px;
 }
+.projects-container,
+.profile-container {
+  background-color: #f0f0f0; 
+  padding: 2rem;
+  border-radius: 10px;
+  margin: 2rem auto;
+  max-width: 800px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
 /* Media Queries for Responsive Design */
 
 /* Small Devices (Mobile) */
