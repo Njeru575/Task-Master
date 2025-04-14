@@ -54,4 +54,4 @@ class Task(db.Model):
     status = db.Column(db.String(50), default='Pending')
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'), nullable=False)
 
-    # No need to redefine relationships already defined via TaskAssignment
+   
