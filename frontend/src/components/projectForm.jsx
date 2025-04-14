@@ -41,7 +41,7 @@ const ProjectForm = ({ onSubmit }) => {
                         <Field 
                             name="title" 
                             type="text"
-                            className="form-control"  // bootstrap classes
+                            className="form-control"  
                         />
                         <ErrorMessage 
                             name="title" 
