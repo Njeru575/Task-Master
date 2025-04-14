@@ -7,10 +7,16 @@ const Profile = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    if (storedUser) {
-      fetch(`http://localhost:5000/users/${storedUser.id}`)
-        .then((res) => res.json())
-        .then(setUserDetails);
+    if (storedUser && storedUser.id) {
+      fetch(`http://localhost:5000/api/users/${storedUser.id}`)
+        .then((res) => {
+          if (!res.ok) throw new Error("Failed to fetch user details");
+          return res.json();
+        })
+        .then(setUserDetails)
+        .catch((err) => {
+          console.error("Error fetching user:", err);
+        });
     }
   }, [storedUser]);
 
@@ -23,7 +29,7 @@ const Profile = () => {
   }
 
   return (
-    <div classNmae="profile-container">
+    <div>
       <h2>Your Profile</h2>
       <p><strong>Username:</strong> {userDetails.username}</p>
       <p><strong>Email:</strong> {userDetails.email}</p>

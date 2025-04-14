@@ -8,11 +8,11 @@ import {
 } from 'react-router-dom';
 
 // Component imports
-import Navbar from './components/navbar';
-import Home from './components/home';
-import Projects from './components/projects';
-import ProjectDetails from './components/projectDetails';
-import Profile from './components/profile';
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import Projects from './components/Projects';
+import ProjectDetails from './components/ProjectDetails';
+import Profile from './components/Profile';
 // import Settings from './components/Settings';  // will add this later if needs be
 
 function App() {
