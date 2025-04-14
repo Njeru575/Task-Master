@@ -1,7 +1,7 @@
-
 from flask import request, jsonify
 from datetime import datetime
-from app import db
+
+from extensions import db  
 from models import User, Project, Task, TaskAssignment
 
 def register_routes(app):
@@ -14,6 +14,16 @@ def register_routes(app):
     @app.route('/api/users/register', methods=['POST'])
     def register_user():
         data = request.json
+        if not data.get('username') or not data.get('email') or not data.get('password'):
+            return jsonify({'message': 'Missing fields.'}), 400
+
+        existing_user = User.query.filter(
+            (User.username == data['username']) | (User.email == data['email'])
+        ).first()
+
+        if existing_user:
+            return jsonify({'message': 'User already exists.'}), 409
+
         user = User(username=data['username'], email=data['email'])
         user.set_password(data['password'])
         db.session.add(user)
@@ -79,7 +89,6 @@ def register_routes(app):
         return jsonify({'message': 'Project deleted successfully.'})
 
     # ---------- Task Routes ----------
-
     @app.route('/api/tasks', methods=['POST'])
     def create_task():
         data = request.json
@@ -88,9 +97,8 @@ def register_routes(app):
         status = data.get('status', 'pending')
         project_id = data.get('project_id')
     
-    # Parse due_date string into a datetime.date object
         due_date_str = data.get('due_date')
-        due_date = datetime.strptime(due_date_str, "%d-%m-%Y").date() if due_date_str else None
+        due_date = datetime.strptime(due_date_str, "%Y-%m-%d").date() if due_date_str else None
 
         new_task = Task(
             title=title,
@@ -98,11 +106,18 @@ def register_routes(app):
             due_date=due_date,
             status=status,
             project_id=project_id
-    )
+        )
     
         db.session.add(new_task)
         db.session.commit()
-        return jsonify({'message': 'Task created successfully'}), 201
+        return jsonify({
+            'id': new_task.id,
+            'title': new_task.title,
+            'description': new_task.description,
+            'due_date': new_task.due_date.isoformat() if new_task.due_date else None,
+            'status': new_task.status,
+            'project_id': new_task.project_id
+        }), 201
 
     @app.route('/api/tasks', methods=['GET'])
     def get_tasks():
