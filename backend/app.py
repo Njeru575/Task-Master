@@ -1,9 +1,6 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from flask_migrate import Migrate
-
-db = SQLAlchemy()
+from extensions import db, migrate  # Import from extensions
 
 def create_app():
     app = Flask(__name__)
@@ -13,14 +10,14 @@ def create_app():
 
     CORS(app)
     db.init_app(app)
-    Migrate(app, db)
+    migrate.init_app(app, db)
 
-    # Import and register routes
+    # Register routes
     from routes import register_routes
     register_routes(app)
 
     return app
 
-if __name__ == '__main__':
+if __name__ == '_main_':
     app = create_app()
     app.run(debug=True)
