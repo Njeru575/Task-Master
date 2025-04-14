@@ -23,7 +23,7 @@ const Profile = () => {
   }
 
   return (
-    <div>
+    <div classNmae="profile-container">
       <h2>Your Profile</h2>
       <p><strong>Username:</strong> {userDetails.username}</p>
       <p><strong>Email:</strong> {userDetails.email}</p>
