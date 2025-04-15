@@ -12,7 +12,6 @@ class TaskAssignment(db.Model):
     user = db.relationship('User', backref=db.backref('assignments', passive_deletes=True), overlaps="tasks,assigned_users")
     task = db.relationship('Task', backref=db.backref('task_assignments', passive_deletes=True), overlaps="assigned_users,tasks")
 
-
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
