@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 
 // Component imports
-import Navbar from './components/Navbar';
+import Navbar from './components/navbar';
 import Home from './components/Home';
 import Projects from './components/Projects';
 import ProjectDetails from './components/ProjectDetails';
@@ -64,3 +64,6 @@ function App() {
 
 // Need to wrap with auth provider later
 export default App;
+
+
+
