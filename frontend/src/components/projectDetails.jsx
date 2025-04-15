@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import TaskForm from "../components/taskForm";
+import TaskForm from "../components/TaskForm";
 
 const ProjectDetails = () => {
   const { id } = useParams();
