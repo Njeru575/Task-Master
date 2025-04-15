@@ -42,6 +42,26 @@ def register_routes(app):
     def get_user(id):
         user = User.query.get_or_404(id)
         return jsonify({'id': user.id, 'username': user.username, 'email': user.email})
+    
+    # ---------- Getting all users ----------
+    @app.route('/api/users', methods=['GET'])
+    def get_users():
+        users = User.query.all()
+        return jsonify([{
+            'id': u.id,
+            'username': u.username,
+            'email': u.email
+        } for u in users])
+    
+    
+
+    @app.route('/api/users/<int:id>', methods=['DELETE'])
+    def delete_user(id):
+        user = User.query.get_or_404(id)
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify({'message': 'User deleted successfully.'})
+    
 
     # ---------- Project Routes ----------
     @app.route('/api/projects', methods=['POST'])
@@ -139,6 +159,29 @@ def register_routes(app):
             'title': task.title,
             'description': task.description,
             'due_date': task.due_date,
+            'status': task.status,
+            'project_id': task.project_id
+        })
+    
+    @app.route('/api/tasks/<int:id>', methods=['PUT'])
+    def update_task(id):
+        task = Task.query.get_or_404(id)
+        data = request.json
+
+        task.title = data.get('title', task.title)
+        task.description = data.get('description', task.description)
+        task.status = data.get('status', task.status)
+
+        due_date_str = data.get('due_date')
+        if due_date_str:
+            task.due_date = datetime.strptime(due_date_str, "%Y-%m-%d").date()
+
+        db.session.commit()
+        return jsonify({
+            'id': task.id,
+            'title': task.title,
+            'description': task.description,
+            'due_date': task.due_date.isoformat() if task.due_date else None,
             'status': task.status,
             'project_id': task.project_id
         })
