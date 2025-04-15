@@ -272,4 +272,27 @@ button:hover {
     gap: 40px;
   }
 }
+/* ❌ Delete Project Button */
+.delete-project-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
 
+.delete-project-btn:hover {
+  background-color: #c0392b;
+}
+
+/* 🧱 Button container inside project item */
+.project-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
