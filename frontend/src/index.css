@@ -272,6 +272,24 @@ button:hover {
     gap: 40px;
   }
 }
+
+/* 🔄 Update Project Button */
+.update-project-btn {
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.update-project-btn:hover {
+  background-color: #e67e22;
+}
+
 /* ❌ Delete Project Button */
 .delete-project-btn {
   background-color: #e74c3c;
